@@ -23,7 +23,7 @@ local rapidjson = require("rapidjson")
 local util = require("util")
 local _ = require("gettext")
 local T = require("ffi/util").template
-
+local TagBrowser = require("tagbrowser")
 -- get root dir for disk scans
 local function getDefaultRootDir()
     if Device:isCervantes() or Device:isKobo() then
@@ -383,6 +383,15 @@ end
 
 -- browse tags or series
 function CalibreSearch:browse(option, run, chosen)
+
+    local tb = TagBrowser:new()
+    local tag_book_map = buildTagBookMap({})
+    tb:setMenuEntries(tag_book_map)
+
+    UIManager:show(tb)
+
+    do return end
+
     local menu_container = CenterContainer:new{
         dimen = Screen:getSize(),
     }
