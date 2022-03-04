@@ -35,27 +35,13 @@ function TagBrowser:_showTagsRoot()
     self:switchItemTable(TAGS_TITLE, rows)
 end
 
-local function getTableCount(table)
-    if type(table) ~= "table" then do return 0 end end
-
-    local t = table or {}
-    local count = 0
-    for k, v in pairs(t) do count = count + 1 end
-    return count
-end
 
 function TagBrowser:_buildItemRows(tag_book_map)
     local rows = {}
-    for k, v in pairs(tag_book_map) do
-        local children = getTableCount(v)
-        local txt = k
-        if children > 0 then
-            txt = k .. " (" .. children .. ")"
-        end
-
+    for _, item in pairs(tag_book_map) do
         table.insert(rows, {
-            text = txt,
-            callback = function() self:_onItemClicked(k) end
+            text = item.text or "",
+            callback = function() self:_onItemClicked(item) end
         })
     end
 
@@ -63,12 +49,24 @@ function TagBrowser:_buildItemRows(tag_book_map)
 end
 
 function TagBrowser:_onItemClicked(item)
-    -- item is tag string
-    if type(item) ~= "string" then error("item must be string") end
+
+    print("Item clicked:", item)
+
+    if(type(item) =="table") then
+        for k, v in pairs(item) do
+            print(k,v)
+        end
+    end
 
     if type(self.tag_book_map[item]) == "table" then
         table.insert(self.paths, item)
         local rows = self:_buildItemRows(self.tag_book_map[item])
+
+        for k, v in pairs(rows) do
+            print(k,v)
+        end
+
+
         self:switchItemTable(item, rows)
     end
 end
