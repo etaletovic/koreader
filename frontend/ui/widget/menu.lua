@@ -773,11 +773,13 @@ function Menu:init()
                     if search_string == "" then return end
                     search_string = Utf8Proc.lowercase(util.fixUtf8(search_string, "?"))
                     for k, v in ipairs(self.item_table) do
-                        local filename = Utf8Proc.lowercase(util.fixUtf8(FFIUtil.basename(v.path), "?"))
-                        local i, _ = filename:find(search_string)
-                        if i == 1 and not v.is_go_up then
-                            self:onGotoPage(math.ceil(k / self.perpage))
-                            break
+                        if(v.path) then
+                            local filename = Utf8Proc.lowercase(util.fixUtf8(FFIUtil.basename(v.path), "?"))
+                            local i, _ = filename:find(search_string)
+                            if i == 1 and not v.is_go_up then
+                                self:onGotoPage(math.ceil(k / self.perpage))
+                               break
+                            end
                         end
                     end
                     self.page_info_text:closeInputDialog()
