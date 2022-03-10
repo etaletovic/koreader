@@ -390,6 +390,7 @@ function CalibreSearch:browse(option, run, chosen)
         width = Screen:getWidth() - (Size.margin.fullscreen_popout * 2),
         height = Screen:getHeight() - (Size.margin.fullscreen_popout * 2),
         show_parent = menu_container,
+        goto_letter = true,
         onMenuHold = self.onMenuHold,
         _manager = self,
     }
